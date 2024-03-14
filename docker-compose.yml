@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  app:
+    image: 'spring-boot-carts:latest'
+    build:
+      context: .
+    container_name: app
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/cartsdb
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=password
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=create
+    ports:
+      - '8080:8080'
+
+  db:
+    image: 'postgres:16'
+    expose:
+      - 5432
+    ports:
+      - '5432:5432'
+    container_name: db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=cartsdb
