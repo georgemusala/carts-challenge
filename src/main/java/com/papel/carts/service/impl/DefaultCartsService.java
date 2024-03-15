@@ -16,8 +16,8 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class DefaultCartsService implements CartsService {
-    private static final String MISSING_CART_MESSAGE = "No cart found by code: ";
-    private static final String CART_EXISTS = "Found cart with code: ";
+    private static final String MISSING_CART_MESSAGE = "No cart found by code: %s";
+    private static final String CART_EXISTS = "Found cart with code: %s";
 
     private final CartsRepository cartsRepository;
 
@@ -26,7 +26,7 @@ public class DefaultCartsService implements CartsService {
     @Override
     public CartData createCart(final CartData cartData) {
         if (cartsRepository.findOneByCode(cartData.getCode()) != null) {
-            throw new CartExistsException(CART_EXISTS + cartData.getCode());
+            throw new CartExistsException(CART_EXISTS.formatted(cartData.getCode()));
         }
         CartModel savedCart = saveCart(modelMapper.map(cartData, CartModel.class));
 
@@ -37,7 +37,7 @@ public class DefaultCartsService implements CartsService {
     public CartData updateCart(final CartData cartData) {
         CartModel existingCart = cartsRepository.findOneByCode(cartData.getCode());
         if (existingCart == null) {
-            throw new CartNotFoundException(MISSING_CART_MESSAGE + cartData.getCode());
+            throw new CartNotFoundException(MISSING_CART_MESSAGE.formatted(cartData.getCode()));
         }
 
         modelMapper.map(cartData, existingCart);
@@ -49,7 +49,6 @@ public class DefaultCartsService implements CartsService {
     @Retryable(retryFor = ObjectOptimisticLockingFailureException.class, maxAttempts = 2, backoff = @Backoff(delay = 100))
     private CartModel saveCart(CartModel cartModel) throws ObjectOptimisticLockingFailureException {
         CartModel savedCart = cartsRepository.save(cartModel);
-        //System.out.println(cartModel.getVersion());
         return savedCart;
     }
 }
