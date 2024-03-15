@@ -5,7 +5,9 @@ import com.papel.carts.service.CartsService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -28,7 +30,7 @@ public class CartsControllers {
      */
     @PostMapping(value = "/create", consumes = "application/json", produces = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public CartData createCart(@Valid @RequestBody CartData cartData) {
+    public CartData createCart(@Valid @RequestBody final CartData cartData) {
         return cartsService.createCart(cartData);
     }
 
@@ -37,8 +39,9 @@ public class CartsControllers {
      * @param cartData
      * @return
      */
-    @PostMapping(value = "/update", consumes = "application/json", produces = "application/json")
-    public CartData updateCart(@Valid @RequestBody CartData cartData) {
-        return cartsService.updateCart(cartData);
+    @PutMapping(value = "/update/{cartCode}", consumes = "application/json", produces = "application/json")
+    public CartData updateCart(@Valid @PathVariable(required = true) final String cartCode,
+                               @RequestBody CartData cartData) {
+        return cartsService.updateCart(cartCode, cartData);
     }
 }

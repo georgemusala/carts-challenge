@@ -27,7 +27,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -121,7 +120,7 @@ public class DefaultCartServiceTest {
         expectedCartData.setTotalPrice(FINAL_PRICE);
         when(modelMapper.map(cartModel, CartData.class)).thenReturn(expectedCartData);
 
-        CartData updatedCart = defaultCartService.updateCart(cartDataRequest);
+        CartData updatedCart = defaultCartService.updateCart(cartDataRequest.getCode(), cartDataRequest);
 
         verify(cartsRepository).save(any(CartModel.class));
 
@@ -134,7 +133,7 @@ public class DefaultCartServiceTest {
 
         when(cartsRepository.findOneByCode(CART_CODE)).thenReturn(null);
 
-        assertThrows(CartNotFoundException.class, () ->defaultCartService.updateCart(cartDataRequest));
+        assertThrows(CartNotFoundException.class, () ->defaultCartService.updateCart(cartDataRequest.getCode(), cartDataRequest));
     }
 
 }

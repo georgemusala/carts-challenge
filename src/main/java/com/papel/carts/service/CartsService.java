@@ -12,12 +12,12 @@ public interface CartsService {
      * @param cartData
      * @return
      */
-    CartData createCart(CartData cartData);
+    CartData createCart(final CartData cartData);
 
     /**
      * Updates an existing cart from database
      * @param cartData
      * @return
      */
-    CartData updateCart(CartData cartData);
+    CartData updateCart(final String cartCode, final CartData cartData);
 }

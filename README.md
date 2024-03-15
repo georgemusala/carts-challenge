@@ -28,7 +28,7 @@ How to use the app:
 
 2. To update a cart:
     
-    Make a POST call to http://localhost:8080/carts/update
+    Make a PUT call to http://localhost:8080/carts/update/{cartCode}
     payload example:
 
    ```
@@ -39,3 +39,5 @@ How to use the app:
       "totalPrice": 103
    }
    ```
+Note: code from JSON should be the same as {cartCode} pathParam. If the values are different the one from JSON will be 
+ignored and pathParam will be used instead for update

@@ -34,10 +34,12 @@ public class DefaultCartsService implements CartsService {
     }
 
     @Override
-    public CartData updateCart(final CartData cartData) {
-        CartModel existingCart = cartsRepository.findOneByCode(cartData.getCode());
+    public CartData updateCart(final String cartCode, final CartData cartData) {
+
+        cartData.setCode(cartCode);
+        CartModel existingCart = cartsRepository.findOneByCode(cartCode);
         if (existingCart == null) {
-            throw new CartNotFoundException(MISSING_CART_MESSAGE.formatted(cartData.getCode()));
+            throw new CartNotFoundException(MISSING_CART_MESSAGE.formatted(cartCode));
         }
 
         modelMapper.map(cartData, existingCart);
