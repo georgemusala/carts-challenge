@@ -17,21 +17,25 @@ How to use the app:
     Make a POST call to http://localhost:8080/carts/create
     payload example:
 
+   ```
    {
-   "code": "2428381",
-   "creationDate": "2024-09-13",
-   "currency": "RON",
-   "totalPrice": 103
+      "code": "2428381",
+      "creationDate": "2024-09-13",
+      "currency": "RON",
+      "totalPrice": 103
    }
+   ```
 
 2. To update a cart:
     
     Make a POST call to http://localhost:8080/carts/update
     payload example:
-    
-    {
-   "code": "2428381",
-   "creationDate": "2024-09-13",
-   "currency": "RON",
-   "totalPrice": 103
+
+   ```
+   {
+      "code": "2428381",
+      "creationDate": "2024-09-13",
+      "currency": "RON",
+      "totalPrice": 103
    }
+   ```
