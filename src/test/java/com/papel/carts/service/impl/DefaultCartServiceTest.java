@@ -91,8 +91,8 @@ public class DefaultCartServiceTest {
 
         CartData createdCart = defaultCartService.createCart(cartDataRequest);
 
-        verify(cartsRepository, times(1)).findOneByCode(anyString());
-        verify(cartsRepository, times(1)).save(any(CartModel.class));
+        verify(cartsRepository).findOneByCode(anyString());
+        verify(cartsRepository).save(any(CartModel.class));
 
         assertTrue(new ReflectionEquals(expectedCartData).matches(createdCart));
     }
@@ -104,7 +104,7 @@ public class DefaultCartServiceTest {
 
         assertThrows(CartExistsException.class, () ->defaultCartService.createCart(cartDataRequest));
 
-        verify(cartsRepository, times(1)).findOneByCode(anyString());
+        verify(cartsRepository).findOneByCode(anyString());
     }
 
     @Test
@@ -123,7 +123,7 @@ public class DefaultCartServiceTest {
 
         CartData updatedCart = defaultCartService.updateCart(cartDataRequest);
 
-        verify(cartsRepository, times(1)).save(any(CartModel.class));
+        verify(cartsRepository).save(any(CartModel.class));
 
         assertEquals(FINAL_PRICE, updatedCart.getTotalPrice());
     }
